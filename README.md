@@ -58,6 +58,8 @@ task argo:create-vela-app
 
 You can check the Application status on the dashboard (https://localhost:8080) 🥳
 
+![Application Status](./resources/app-dashboard.png)
+
 ---
 
 ## References
