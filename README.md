@@ -14,6 +14,7 @@ Deploy KubeVela [Appfile](https://kubevela.io/docs/developers/learn-appfile) wit
 - [Helm](https://helm.sh)
 - [Helmfile](https://github.com/helmfile/helmfile)
   - [helm-diff](https://github.com/databus23/helm-diff)
+- [kubectl](https://kubernetes.io/docs/tasks/tools)
 
 ## Install base components
 
@@ -27,6 +28,35 @@ To install both components, run the following command in the shell:
 # This command will install `Argo CD` and `KubeVela` through `Helmfile`.
 task infra:deploy
 ```
+
+## Deploy Appfile
+
+Then, we need to open the tunnel for Argo CD CLI to communicate with the server.
+
+```sh
+# This command will forward the Argo CD server port
+task argo:proxy
+```
+
+Let's log in to Argo CD in the other session:
+
+```sh
+# This command will print the initial admin credential and log in to Argo CD
+task argo:login
+
+# Output:
+# > ArgoCD Username: admin / Password: <plain-password>
+# > 'admin:login' logged in successfully
+# > Context 'localhost:8080' updated
+```
+
+Finally, it's time to deploy the [sample Appfile](./sample/appfile.yaml).
+
+```sh
+task argo:create-vela-app
+```
+
+You can check the Application status on the dashboard (https://localhost:8080) 🥳
 
 ---
 
