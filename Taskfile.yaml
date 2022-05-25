@@ -1,0 +1,22 @@
+version: "3"
+
+tasks:
+  infra:deploy:
+    deps:
+      - infra:check-deps
+    dir: deployments/infra
+    cmds:
+      - helmfile apply
+
+  infra:check-deps:
+    cmds:
+      - |
+        helm plugin list | grep diff > /dev/null || (echo "Missing dependency: Helm / helm-diff" && exit 1)
+      - |
+        which helmfile > /dev/null || (echo "Missing dependency: Helmfile" && exit 1)
+    silent: true
+
+  infra:destroy:
+    dir: deployments/infra
+    cmds:
+      - helmfile destroy
